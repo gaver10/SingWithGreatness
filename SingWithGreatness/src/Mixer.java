@@ -18,6 +18,14 @@ public class Mixer {
 	
 	}
 	
+	public AudioInputStream adjustVolume(AudioInputStream origSound,float adjust){
+		
+		AmplitudeAudioInputStream adjustedSound = new AmplitudeAudioInputStream(origSound);
+		adjustedSound.setAmplitudeLinear(adjust);
+		return adjustedSound;
+		
+	}
+	
 	public void getTrack(String audioFilePath){
 		
 		try{
