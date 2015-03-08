@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+header {
+	background-color: #33CCCC;
+	width: auto;
+	height: 50px;
+}
+
+h1 {
+	font-family: Georgia, serif;
+	font-size: 20px;
+}
+
+boxTable {
+	border: 1px solid #33CCCC;
+	vertical-align: top;
+}
+
+loginTable, registerTable {
+	border: none;
+	vertical-align: top;
+}
