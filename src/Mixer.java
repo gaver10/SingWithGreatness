@@ -147,6 +147,7 @@ public AudioInputStream makeFinalTrack(ArrayList<Integer> times, File originalTr
 				bytesToRead = bytesPerSecond * (times.get(i+1) - times.get(i)); 
 				if(isSilent){
 					temp = makeBlankClip(times.get(i+1).intValue()-times.get(i).intValue());
+					temp = new AudioInputStream(temp, AudioSystem.getAudioFileFormat(originalTrack.toURI().toURL()).getFormat(), temp.getFrameLength());
 					while (((numBytesRead < bytesToRead) && (len = temp.read(buffer)) > -1) ) {
 					    baos.write(buffer, 0, len);
 					    numBytesRead++;
@@ -186,13 +187,14 @@ public int playAudioInputStream(AudioInputStream audio) {
 		SourceDataLine sourceLine = (SourceDataLine) AudioSystem.getLine(new DataLine.Info(SourceDataLine.class, audio.getFormat()));
 	    sourceLine.open(audio.getFormat());
 	    sourceLine.start();
+	    System.out.println(audio.getFrameLength() * audio.getFormat().getFrameSize());
 	    int nBytesRead = 0;
 	    byte[] abData = new byte[BUFFER_SIZE];
 	    int BytesRead = 0;
 	 
-	    while (nBytesRead != -1) {
+	    while (nBytesRead != -1 && BytesRead < audio.getFrameLength() * audio.getFormat().getFrameSize() ) {
 	        try {
-	        	BytesRead = nBytesRead;
+	        	BytesRead += nBytesRead;
 	            nBytesRead = audio.read(abData);
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -201,6 +203,8 @@ public int playAudioInputStream(AudioInputStream audio) {
 	            @SuppressWarnings("unused")
 	            int nBytesWritten = sourceLine.write(abData, 0, nBytesRead);
 	        }
+	        System.out.println(BytesRead);
+	        System.out.println(audio.getFrameLength() * audio.getFormat().getFrameSize());
 	    }
 	    sourceLine.drain();
 	    sourceLine.close();
@@ -222,10 +226,10 @@ public int playAudioInputStream(AudioInputStream audio) {
 public long skipAmount(AudioInputStream ais, long bytestobeskipped)
 {
 	long bytesSkipped = 0;
-	long temp;
+	long temp = -1;
 	System.out.println("Bytes to be skippeD: "+bytestobeskipped);
 	try {
-	while(bytesSkipped < bytestobeskipped)
+	while(bytesSkipped < bytestobeskipped || temp == 0)
 	{
 		
 		temp = ais.skip(bytestobeskipped);
