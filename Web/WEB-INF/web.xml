@@ -17,12 +17,5 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>Mixer</servlet-name>
-    <servlet-class>com.singwithgreatness.mixer.Mixer</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Mixer</servlet-name>
-    <url-pattern>/MixerServlet</url-pattern>
-  </servlet-mapping>
+ 
 </web-app>

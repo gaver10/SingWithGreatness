@@ -14,7 +14,7 @@
 <body>
 <pre class="changing"></pre>
 <script>
-function addTrack () {
+function addTrack (trackLength) {
 	var objTo = document.getElementById('mixerControl');
     var newDiv = document.createElement("div");
     
@@ -38,7 +38,7 @@ function addTrack () {
     	  label: function(i) { return i.map(Math.floor).toString();}} ).$el.css({width: '500px', textAlign: 'center', color: 'white'}));
 }
 </script>
-	<form action="MixerServlet">
+	<form action="MixerS" method="post">
 		<center>
 			<div class="header">
 				<h1>
@@ -59,8 +59,8 @@ function addTrack () {
 				<div id="mixerControl">
 				</div>
 				<div class="mixerButtons">
-					<input type="button" id="playBtn" value="Play"/>
-					<input type="button" id="stopBtn" value="Stop"/>
+					<input type="button" id="playBtn" name="playBtn" value="Play"/>
+					<input type="button" id="stopBtn" name="stopBtn" value="Stop"/>
 				</div>
 			</div>
 		</center>
