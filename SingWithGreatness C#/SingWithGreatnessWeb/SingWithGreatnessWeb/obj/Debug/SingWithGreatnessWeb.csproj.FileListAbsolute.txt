@@ -1,0 +1,8 @@
+d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\bin\SingWithGreatnessWeb.dll.config
+d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\bin\SingWithGreatnessWeb.dll
+d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\bin\SingWithGreatnessWeb.pdb
+d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\bin\NAudio.dll
+d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\bin\NAudio.xml
+d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.dll
+d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.pdb
