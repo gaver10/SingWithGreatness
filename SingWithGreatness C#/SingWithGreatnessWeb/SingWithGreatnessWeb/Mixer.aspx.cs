@@ -9,27 +9,31 @@ using System.Web.UI.WebControls;
 
 namespace SingWithGreatnessWeb
 {
-    public class Mixer : System.Web.UI.Page
+    public partial class Mixer : System.Web.UI.Page
     {
 
         private List<WaveFileReader> toMix;
-        private String targetFile; 
+        private String targetFile = "output"; 
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-        public Stream MixAudio(Dictionary<String,int[]> songsXtimes)
+        public void MixAudio(Dictionary<String,int[]> songsXtimes)
         {
             toMix = new List<WaveFileReader>();
             WaveMixerStream32 combined = null;
             foreach (String s in songsXtimes.Keys){
                 PrepareClip(s, songsXtimes[s]);
                 //chop it up and add it to toMix
-                combined = Combine();
+                
             }
-
-            return combined;
+            combined = Combine();
+            byte[] b = new byte[combined.Length];
+            combined.Read(b,0,(int)combined.Length);
+            WaveFileWriter wv = new WaveFileWriter(targetFile, combined.WaveFormat);
+            wv.Write(b, 0, (int)combined.Length);
+            return;
         }
 
         private void PrepareClip(String song, int[] times)
@@ -118,7 +122,7 @@ namespace SingWithGreatnessWeb
                     int bytesRead = reader.Read(buffer, 0, bytesToRead);
                     if (bytesRead > 0)
                     {
-                        writer.WriteData(buffer, 0, bytesRead);
+                        writer.Write(buffer, 0, bytesRead);
                     }
                 }
             }
