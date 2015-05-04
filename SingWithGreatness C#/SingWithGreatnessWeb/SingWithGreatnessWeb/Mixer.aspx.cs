@@ -13,11 +13,22 @@ namespace SingWithGreatnessWeb
     {
 
         private List<WaveFileReader> toMix;
-        private String targetFile = "output"; 
+        private String targetFile = "C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\output";
+
+        static int Main(string[] args)
+        {
+
+            return 0;
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
+            dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { 0, 5, 10,15 });
+            dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\two", new int[] { 5, 10, 15, 20 });
+            Mixer mix = new Mixer();
+            mix.MixAudio(dict);
         }
         public void MixAudio(Dictionary<String,int[]> songsXtimes)
         {
@@ -29,10 +40,20 @@ namespace SingWithGreatnessWeb
                 
             }
             combined = Combine();
+
+            
+            Wave32To16Stream wavmixer = new Wave32To16Stream(combined);
+            WaveFileWriter.CreateWaveFile(targetFile, wavmixer);
+            wavmixer.Dispose();
+            combined.Dispose();
+            /*
             byte[] b = new byte[combined.Length];
-            combined.Read(b,0,(int)combined.Length);
+            int len = (int)combined.Length;
+            combined.Read(b,0,len);
+            combined.Close();
             WaveFileWriter wv = new WaveFileWriter(targetFile, combined.WaveFormat);
             wv.Write(b, 0, (int)combined.Length);
+             * */
             return;
         }
 
@@ -41,18 +62,29 @@ namespace SingWithGreatnessWeb
             Mp3ToWav(song, song + "wav");
             WaveFileReader reader = new WaveFileReader(song+"wav");
             WaveFileWriter writer = new WaveFileWriter(song+"mix", reader.WaveFormat);
+            TimeSpan TotalTime = reader.TotalTime;
+            int audlen = (int)TotalTime.TotalSeconds;
+
             for (int i = 0; i < times.Length;i+=2 )
             {
-                TrimWavFile(reader, writer, new TimeSpan(0,0,times[i]), new TimeSpan(0,0,times[i + 1]));
+                if (i == 0 && times[i] > 0)
+                {
+                    double silence = times[i] * 1000;
+                    InsertSilence(writer, silence);
+
+                }
+                TrimWavFile(reader, writer, new TimeSpan(0,0,times[i]), new TimeSpan(0,0,audlen-times[i+1]));
                 if (i + 2 < times.Length)
                 {
                     double silence = (times[i+2] - times[i+1])*1000;
+                    
 
                     InsertSilence(writer, silence);
                 }
             }
             writer.Close();
             reader.Close();
+            toMix.Add(new WaveFileReader(song + "mix"));
             
 
 
@@ -68,6 +100,7 @@ namespace SingWithGreatnessWeb
             silenceSize = silenceSize - silenceSize % writer.WaveFormat.BlockAlign;
 
             Byte[] silenceArray = new Byte[silenceSize];
+            
             writer.Write(silenceArray, 0, silenceArray.Length);
 
         }
@@ -77,36 +110,37 @@ namespace SingWithGreatnessWeb
         {
 
             WaveMixerStream32 wavMix = new WaveMixerStream32();
+            wavMix.AutoStop = true;
 
-
-            FileStream output= new FileStream(targetFile,FileMode.OpenOrCreate);
+            
             foreach (WaveFileReader reader in toMix )
             {
-
-                wavMix.AddInputStream(reader);
+                WaveChannel32 wc3 = new WaveChannel32(reader);
+                wavMix.AddInputStream(wc3);
+                
                 
             }
+            wavMix.Position = 0;
             return wavMix;
         }
 
         public static void TrimWavFile(WaveFileReader r, WaveFileWriter w, TimeSpan cutFromStart, TimeSpan cutFromEnd)
         {
-            using (WaveFileReader reader = r)
-            {
-                using (WaveFileWriter writer = w)
-                {
-                    int bytesPerMillisecond = reader.WaveFormat.AverageBytesPerSecond / 1000;
+            WaveFileReader reader = r;
 
-                    int startPos = (int)cutFromStart.TotalMilliseconds * bytesPerMillisecond;
-                    startPos = startPos - startPos % reader.WaveFormat.BlockAlign;
+            WaveFileWriter writer = w;
+                
+            int bytesPerMillisecond = reader.WaveFormat.AverageBytesPerSecond / 1000;
 
-                    int endBytes = (int)cutFromEnd.TotalMilliseconds * bytesPerMillisecond;
-                    endBytes = endBytes - endBytes % reader.WaveFormat.BlockAlign;
-                    int endPos = (int)reader.Length - endBytes;
+            int startPos = (int)cutFromStart.TotalMilliseconds * bytesPerMillisecond;
+            startPos = startPos - startPos % reader.WaveFormat.BlockAlign;
 
-                    TrimWavFile(reader, writer, startPos, endPos);
-                }
-            }
+            int endBytes = (int)cutFromEnd.TotalMilliseconds * bytesPerMillisecond;
+            endBytes = endBytes - endBytes % reader.WaveFormat.BlockAlign;
+            int endPos = (int)reader.Length - endBytes;
+
+            TrimWavFile(reader, writer, startPos, endPos);
+             
         }
 
         private static void TrimWavFile(WaveFileReader reader, WaveFileWriter writer, int startPos, int endPos)
