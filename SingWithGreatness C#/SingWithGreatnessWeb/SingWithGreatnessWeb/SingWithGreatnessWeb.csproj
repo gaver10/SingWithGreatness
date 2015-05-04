@@ -122,7 +122,6 @@
     <Compile Include="Mixer.aspx.designer.cs">
       <DependentUpon>Mixer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mixer.cs" />
     <Compile Include="MixerEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SingWithGreatness.Master.cs">

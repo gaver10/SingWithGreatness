@@ -11,7 +11,7 @@ namespace SingWithGreatnessWeb
 {
 
 
-    public partial class Mixer1
+    public partial class Mixer
     {
     }
 }

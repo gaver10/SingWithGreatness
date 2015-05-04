@@ -6,3 +6,6 @@ d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessW
 d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.csprojResolveAssemblyReference.cache
 d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.dll
 d:\documents\visual studio 2013\Projects\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.pdb
+C:\Users\Gavin\Documents\GitHub\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.csprojResolveAssemblyReference.cache
+C:\Users\Gavin\Documents\GitHub\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.dll
+C:\Users\Gavin\Documents\GitHub\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.pdb
