@@ -13,15 +13,6 @@ namespace SingWithGreatnessWeb {
     public partial class Mixer {
         
         /// <summary>
-        /// addTrack control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button addTrack;
-        
-        /// <summary>
         /// track1Label control.
         /// </summary>
         /// <remarks>
@@ -119,6 +110,15 @@ namespace SingWithGreatnessWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button mixButton;
+        
+        /// <summary>
+        /// completeLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label completeLabel;
         
         /// <summary>
         /// playButton control.

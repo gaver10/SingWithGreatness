@@ -13,11 +13,13 @@ namespace SingWithGreatnessWeb
     {
         private List<WaveFileReader> toMix;
         private String targetFile = "C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\output";
-        AudioFileReader audio;
-        IWavePlayer player;
+        private AudioFileReader audio;
+        private static WaveOut player = new WaveOut(WaveCallbackInfo.FunctionCallback());
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
+           
             
         }
 
@@ -163,26 +165,37 @@ namespace SingWithGreatnessWeb
 
         protected void playButton_Click(object sender, EventArgs e)
         {
+
+          
+            
+            audio = new AudioFileReader(targetFile);
+            player.Init(audio);
             player.Play();
+            
+            
         }
+
 
         protected void stopButton_Click(object sender, EventArgs e)
         {
-            player = new WaveOut(WaveCallbackInfo.FunctionCallback());
-            player.Init(audio); 
+           
             player.Stop();
             player.Dispose();
         }
 
         protected void mixButton_Click(object sender, EventArgs e)
         {
+            completeLabel.Visible = false;
+            
             Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
             dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { Convert.ToInt32(track1Start1.Text), Convert.ToInt32(track1End1.Text), Convert.ToInt32(track1Start2.Text), Convert.ToInt32(track1End2.Text) });
             dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\two", new int[] { Convert.ToInt32(track2Start1.Text), Convert.ToInt32(track2End1.Text), Convert.ToInt32(track2Start2.Text), Convert.ToInt32(track2End2.Text) });
             Mixer mix = new Mixer();
             mix.MixAudio(dict);
 
-            audio = new AudioFileReader(targetFile);
+           
+
+            completeLabel.Visible = true;
         }
     }
 }

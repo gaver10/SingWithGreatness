@@ -30,7 +30,7 @@
     </script>
     <center>
         <div>
-            <!--<asp:Button runat="server" ID="addTrack" Text="Add Track" OnClick="addTrack_Click"/>-->
+           
             <table>
                 <tr>
                     <td>
@@ -85,13 +85,15 @@
             </table>
                 <br />
 	        <div id="mixerControl">
-                <asp:Button runat="server" ID="mixButton" Text="Process Mix" OnClick="mixButton_Click" />
+                <asp:Button runat="server" ID="mixButton" Text="Process Mix" OnClick="mixButton_Click" UseSubmitBehavior="False" />
+                <br />
+                <asp:Label runat="server" ID="completeLabel" Text="Done processing" Visible="false" />
 	        </div>
                 <br />
 	        <div class="mixerButtons">
-		        <asp:Button runat="server" ID="playButton" Text="Play" OnClick="playButton_Click" />
+		        <asp:Button runat="server" ID="playButton" Text="Play" OnClick="playButton_Click"  UseSubmitBehavior="False" />
                 &nbsp;
-                <asp:Button runat="server" ID="stopButton" Text="Stop" OnClick="stopButton_Click" />
+                <asp:Button runat="server" ID="stopButton" Text="Stop" OnClick="stopButton_Click" UseSubmitBehavior="False" />
 	        </div>
         </div>
     </center>
