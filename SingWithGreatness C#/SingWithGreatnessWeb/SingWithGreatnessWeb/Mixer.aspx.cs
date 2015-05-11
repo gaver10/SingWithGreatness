@@ -1,35 +1,26 @@
 ﻿using NAudio.Wave;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace SingWithGreatnessWeb
 {
     public partial class Mixer : System.Web.UI.Page
     {
-
         private List<WaveFileReader> toMix;
         private String targetFile = "C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\output";
-
-        static int Main(string[] args)
-        {
-
-            return 0;
-        }
+        AudioFileReader audio;
+        IWavePlayer player;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
-            dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { 0, 5, 10,15 });
-            dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\two", new int[] { 5, 10, 15, 20 });
-            Mixer mix = new Mixer();
-            mix.MixAudio(dict);
+            
         }
+
         public void MixAudio(Dictionary<String,int[]> songsXtimes)
         {
             toMix = new List<WaveFileReader>();
@@ -168,6 +159,30 @@ namespace SingWithGreatnessWeb
             {
                 WaveFileWriter.CreateWaveFile(outputFile, reader);
             }
+        }
+
+        protected void playButton_Click(object sender, EventArgs e)
+        {
+            player.Play();
+        }
+
+        protected void stopButton_Click(object sender, EventArgs e)
+        {
+            player = new WaveOut(WaveCallbackInfo.FunctionCallback());
+            player.Init(audio); 
+            player.Stop();
+            player.Dispose();
+        }
+
+        protected void mixButton_Click(object sender, EventArgs e)
+        {
+            Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
+            dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { Convert.ToInt32(track1Start1.Text), Convert.ToInt32(track1End1.Text), Convert.ToInt32(track1Start2.Text), Convert.ToInt32(track1End2.Text) });
+            dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\two", new int[] { Convert.ToInt32(track2Start1.Text), Convert.ToInt32(track2End1.Text), Convert.ToInt32(track2Start2.Text), Convert.ToInt32(track2End2.Text) });
+            Mixer mix = new Mixer();
+            mix.MixAudio(dict);
+
+            audio = new AudioFileReader(targetFile);
         }
     }
 }
