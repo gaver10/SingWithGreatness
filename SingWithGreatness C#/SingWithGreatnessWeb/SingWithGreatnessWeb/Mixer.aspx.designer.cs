@@ -13,6 +13,24 @@ namespace SingWithGreatnessWeb {
     public partial class Mixer {
         
         /// <summary>
+        /// trackPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel trackPanel;
+        
+        /// <summary>
+        /// track1Panel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel track1Panel;
+        
+        /// <summary>
         /// track1Label control.
         /// </summary>
         /// <remarks>
@@ -22,40 +40,58 @@ namespace SingWithGreatnessWeb {
         protected global::System.Web.UI.WebControls.Label track1Label;
         
         /// <summary>
-        /// track1Start1 control.
+        /// track1Start1Textbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox track1Start1;
+        protected global::System.Web.UI.WebControls.TextBox track1Start1Textbox;
         
         /// <summary>
-        /// track1End1 control.
+        /// track1End1TextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox track1End1;
+        protected global::System.Web.UI.WebControls.TextBox track1End1TextBox;
         
         /// <summary>
-        /// track1Start2 control.
+        /// track1Start2Textbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox track1Start2;
+        protected global::System.Web.UI.WebControls.TextBox track1Start2Textbox;
         
         /// <summary>
-        /// track1End2 control.
+        /// track1End2TextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox track1End2;
+        protected global::System.Web.UI.WebControls.TextBox track1End2TextBox;
+        
+        /// <summary>
+        /// addTrack1Button control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addTrack1Button;
+        
+        /// <summary>
+        /// track2Panel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel track2Panel;
         
         /// <summary>
         /// track2Label control.
@@ -67,40 +103,58 @@ namespace SingWithGreatnessWeb {
         protected global::System.Web.UI.WebControls.Label track2Label;
         
         /// <summary>
-        /// track2Start1 control.
+        /// track2Start1Textbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox track2Start1;
+        protected global::System.Web.UI.WebControls.TextBox track2Start1Textbox;
         
         /// <summary>
-        /// track2End1 control.
+        /// track2End1Textbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox track2End1;
+        protected global::System.Web.UI.WebControls.TextBox track2End1Textbox;
         
         /// <summary>
-        /// track2Start2 control.
+        /// track2Start2Textbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox track2Start2;
+        protected global::System.Web.UI.WebControls.TextBox track2Start2Textbox;
         
         /// <summary>
-        /// track2End2 control.
+        /// track2End2Textbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox track2End2;
+        protected global::System.Web.UI.WebControls.TextBox track2End2Textbox;
+        
+        /// <summary>
+        /// addTrack2Button control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addTrack2Button;
+        
+        /// <summary>
+        /// addTrackButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addTrackButton;
         
         /// <summary>
         /// mixButton control.
