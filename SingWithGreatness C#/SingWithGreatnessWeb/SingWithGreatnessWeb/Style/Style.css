@@ -1,0 +1,56 @@
+﻿ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+a:link, a:visited {
+    display: block;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #99ccff;
+    width: 120px;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+a:hover, a:active {
+    background-color: #6699cc;
+}
+
+li.blank {
+    display: block;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #FFFFFF;
+    width: 120px;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+label {
+    font-weight: bold;
+    color: #99ccff;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+button {
+    display: block;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #99ccff;
+    width: 120px;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+button:hover, button:active{
+    background-color: #6699cc;
+}

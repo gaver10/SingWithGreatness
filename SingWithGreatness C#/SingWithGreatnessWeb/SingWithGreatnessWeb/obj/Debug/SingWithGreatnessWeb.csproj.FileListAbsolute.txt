@@ -19,6 +19,6 @@ D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWit
 D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\bin\SingWithGreatnessWeb.pdb
 D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\bin\NAudio.dll
 D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\bin\NAudio.xml
-D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.csprojResolveAssemblyReference.cache
 D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.dll
 D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.pdb
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb\obj\Debug\SingWithGreatnessWeb.csprojResolveAssemblyReference.cache

@@ -187,7 +187,7 @@ namespace SingWithGreatnessWeb
 
         protected void mixButton_Click(object sender, EventArgs e)
         {
-            completeLabel.Visible = false;
+            //completeLabel.Visible = false;
             
             Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
             //dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { Convert.ToInt32(track1Start1.Text), Convert.ToInt32(track1End1.Text), Convert.ToInt32(track1Start2.Text), Convert.ToInt32(track1End2.Text) });
@@ -197,7 +197,7 @@ namespace SingWithGreatnessWeb
 
            
 
-            completeLabel.Visible = true;
+            //completeLabel.Visible = true;
         }
 
         protected void addTrack1Button_Click(object sender, EventArgs e)
@@ -267,8 +267,8 @@ namespace SingWithGreatnessWeb
             newTrackPanel.Controls.Add(new LiteralControl("&nbsp;"));
             newTrackPanel.Controls.Add(endTextbox2);
 
-            trackPanel.Controls.Add(newTrackPanel);
-            trackPanel.Controls.Add(addSectionsButton);
+            //trackPanel.Controls.Add(newTrackPanel);
+            //trackPanel.Controls.Add(addSectionsButton);
         }
 
         protected void AddSections(int trackNumber)
@@ -286,15 +286,15 @@ namespace SingWithGreatnessWeb
             TextBox endTextbox = new TextBox();
             endTextbox.ID = "track" + trackNumber.ToString() + "End" + sectionNumber.ToString() + "Textbox";
 
-            Panel panel = (Panel)trackPanel.FindControl("track" + trackNumber.ToString() + "Panel");
-            panel.Controls.Add(new LiteralControl("<br/><br/>"));
-            panel.Controls.Add(startLabel);
-            panel.Controls.Add(new LiteralControl("&nbsp;"));
-            panel.Controls.Add(startTextbox);
-            panel.Controls.Add(new LiteralControl("&nbsp;&nbsp;&nbsp;"));
-            panel.Controls.Add(endLabel);
-            panel.Controls.Add(new LiteralControl("&nbsp;"));
-            panel.Controls.Add(endTextbox);
+            //Panel panel = (Panel)trackPanel.FindControl("track" + trackNumber.ToString() + "Panel");
+            //panel.Controls.Add(new LiteralControl("<br/><br/>"));
+            //panel.Controls.Add(startLabel);
+            //panel.Controls.Add(new LiteralControl("&nbsp;"));
+            //panel.Controls.Add(startTextbox);
+            //panel.Controls.Add(new LiteralControl("&nbsp;&nbsp;&nbsp;"));
+            //panel.Controls.Add(endLabel);
+            //panel.Controls.Add(new LiteralControl("&nbsp;"));
+            //panel.Controls.Add(endTextbox);
         }
     }
 }

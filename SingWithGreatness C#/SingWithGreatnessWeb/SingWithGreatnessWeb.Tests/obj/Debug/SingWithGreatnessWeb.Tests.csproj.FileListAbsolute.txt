@@ -7,3 +7,12 @@ C:\Users\Gavin\Documents\GitHub\SingWithGreatness\SingWithGreatness C#\SingWithG
 C:\Users\Gavin\Documents\GitHub\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\obj\Debug\SingWithGreatnessWeb.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Gavin\Documents\GitHub\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\obj\Debug\SingWithGreatnessWeb.Tests.dll
 C:\Users\Gavin\Documents\GitHub\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\obj\Debug\SingWithGreatnessWeb.Tests.pdb
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\obj\Debug\SingWithGreatnessWeb.Tests.csprojResolveAssemblyReference.cache
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\obj\Debug\SingWithGreatnessWeb.Tests.dll
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\obj\Debug\SingWithGreatnessWeb.Tests.pdb
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\bin\Debug\SingWithGreatnessWeb.Tests.dll
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\bin\Debug\SingWithGreatnessWeb.Tests.pdb
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\bin\Debug\NAudio.dll
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\bin\Debug\SingWithGreatnessWeb.dll
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\bin\Debug\SingWithGreatnessWeb.pdb
+D:\Documents\SingWithGreatness\SingWithGreatness C#\SingWithGreatnessWeb\SingWithGreatnessWeb.Tests\bin\Debug\NAudio.xml
