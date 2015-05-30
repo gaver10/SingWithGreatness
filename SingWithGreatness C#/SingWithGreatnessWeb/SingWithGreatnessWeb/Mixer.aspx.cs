@@ -1,6 +1,7 @@
 ﻿using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -21,8 +22,190 @@ namespace SingWithGreatnessWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                SetInitialRow(track1Gridview, "1");
+                SetInitialRow(track2Gridview, "2");
+                SetInitialRow(track3Gridview, "3");
+                SetInitialRow(track4Gridview, "4");
+                SetInitialRow(track5Gridview, "5");
+
+                SetupDropDownList(track1DropdownList);
+                SetupDropDownList(track2DropdownList);
+                SetupDropDownList(track3DropdownList);
+                SetupDropDownList(track4DropdownList);
+                SetupDropDownList(track5DropdownList);
+            }
+
             trackCounts.Add(1, 2);
             trackCounts.Add(2, 2);
+        }
+
+        private void SetupDropDownList(DropDownList ddl)
+        {
+            ddl.Items.Clear();
+            ddl.Items.Add("one");
+            ddl.Items.Add("two");
+        }
+
+        private void SetInitialRow(GridView grid, string trackNumber)
+        {
+            DataTable dt = new DataTable();
+            DataRow dr = null;
+            dt.Columns.Add(new DataColumn("Start", typeof(string)));
+            dt.Columns.Add(new DataColumn("Stop", typeof(string)));
+            dr = dt.NewRow();
+            dr["Start"] = string.Empty;
+            dr["Stop"] = string.Empty;
+            dt.Rows.Add(dr);
+
+            //Store the DataTable in ViewState
+            ViewState["Track" + trackNumber + "Table"] = dt;
+
+            grid.DataSource = dt;
+            grid.DataBind();
+        }
+
+        protected void track1AddButton_Click(object sender, EventArgs e)
+        {
+            AddNewRowToGrid(track1Gridview, "1");
+        }
+
+        protected void track2AddButton_Click(object sender, EventArgs e)
+        {
+            AddNewRowToGrid(track2Gridview, "2");
+        }
+
+        protected void track3AddButton_Click(object sender, EventArgs e)
+        {
+            AddNewRowToGrid(track3Gridview, "3");
+        }
+
+        protected void track4AddButton_Click(object sender, EventArgs e)
+        {
+            AddNewRowToGrid(track4Gridview, "4");
+        }
+
+        protected void track5AddButton_Click(object sender, EventArgs e)
+        {
+            AddNewRowToGrid(track5Gridview, "5");
+        }
+
+        protected void track1DeleteButton_Click(object sender, EventArgs e)
+        {
+            RemoveFromGridview(track1Gridview, "1");
+        }
+
+        protected void track2DeleteButton_Click(object sender, EventArgs e)
+        {
+            RemoveFromGridview(track2Gridview, "2");
+        }
+
+        protected void track3DeleteButton_Click(object sender, EventArgs e)
+        {
+            RemoveFromGridview(track3Gridview, "3");
+        }
+
+        protected void track4DeleteButton_Click(object sender, EventArgs e)
+        {
+            RemoveFromGridview(track4Gridview, "4");
+        }
+
+        protected void track5DeleteButton_Click(object sender, EventArgs e)
+        {
+            RemoveFromGridview(track5Gridview, "5");
+        }
+
+        private void AddNewRowToGrid(GridView grid, string trackNumber)
+        {
+            string tableName = "Track" + trackNumber + "Table";
+
+            int rowIndex = 0;
+
+            if (ViewState[tableName] != null)
+            {
+                DataTable dtCurrentTable = (DataTable)ViewState[tableName];
+                DataRow drCurrentRow = null;
+                if (dtCurrentTable.Rows.Count > 0)
+                {
+                    for (int i = 1; i <= dtCurrentTable.Rows.Count; i++)
+                    {
+                        //extract the TextBox values
+                        TextBox box1 = (TextBox)grid.Rows[rowIndex].Cells[0].FindControl("track" + trackNumber + "StartTextbox");
+                        TextBox box2 = (TextBox)grid.Rows[rowIndex].Cells[1].FindControl("track" + trackNumber + "StopTextbox");
+
+                        drCurrentRow = dtCurrentTable.NewRow();
+
+                        dtCurrentTable.Rows[i - 1]["Start"] = box1.Text;
+                        dtCurrentTable.Rows[i - 1]["Stop"] = box2.Text;
+
+                        rowIndex++;
+                    }
+                    dtCurrentTable.Rows.Add(drCurrentRow);
+                    ViewState[tableName] = dtCurrentTable;
+
+                    grid.DataSource = dtCurrentTable;
+                    grid.DataBind();
+                }
+            }
+            else
+            {
+                Response.Write("ViewState is null");
+            }
+
+            //Set Previous Data on Postbacks
+            SetPreviousData(grid, trackNumber);
+        }
+
+        private void RemoveFromGridview(GridView grid, string trackNumber)
+        {
+            string tableName = "Track" + trackNumber + "Table";
+
+            int rowIndex = 0;
+
+            if (ViewState[tableName] != null)
+            {
+                DataTable dtCurrentTable = (DataTable)ViewState[tableName];
+                if (dtCurrentTable.Rows.Count > 1)
+                {
+                    dtCurrentTable.Rows.RemoveAt(dtCurrentTable.Rows.Count - 1);
+                    ViewState[tableName] = dtCurrentTable;
+
+                    grid.DataSource = dtCurrentTable;
+                    grid.DataBind();
+                }
+            }
+            else
+            {
+                Response.Write("ViewState is null");
+            }
+
+            //Set Previous Data on Postbacks
+            SetPreviousData(grid, trackNumber);
+        }
+
+        private void SetPreviousData(GridView grid, string trackNumber)
+        {
+            string tableName = "Track" + trackNumber + "Table";
+
+            int rowIndex = 0;
+            if (ViewState[tableName] != null)
+            {
+                DataTable dt = (DataTable)ViewState[tableName];
+                if (dt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        TextBox box1 = (TextBox)grid.Rows[rowIndex].Cells[0].FindControl("track" + trackNumber + "StartTextbox");
+                        TextBox box2 = (TextBox)grid.Rows[rowIndex].Cells[1].FindControl("track" + trackNumber + "StopTextbox");
+
+                        box1.Text = dt.Rows[i]["Start"].ToString();
+                        box2.Text = dt.Rows[i]["Stop"].ToString();
+
+                        rowIndex++;
+                    }
+                }
+            }
         }
 
         public void MixAudio(Dictionary<String,int[]> songsXtimes)
@@ -32,7 +215,6 @@ namespace SingWithGreatnessWeb
             foreach (String s in songsXtimes.Keys){
                 PrepareClip(s, songsXtimes[s]);
                 //chop it up and add it to toMix
-                
             }
             combined = Combine();
 
@@ -80,9 +262,6 @@ namespace SingWithGreatnessWeb
             writer.Close();
             reader.Close();
             toMix.Add(new WaveFileReader(song + "mix"));
-            
-
-
         }
 
         private void InsertSilence(WaveFileWriter writer, Double milliseconds)
@@ -97,13 +276,11 @@ namespace SingWithGreatnessWeb
             Byte[] silenceArray = new Byte[silenceSize];
             
             writer.Write(silenceArray, 0, silenceArray.Length);
-
         }
 
 
         public WaveMixerStream32 Combine()
         {
-
             WaveMixerStream32 wavMix = new WaveMixerStream32();
             wavMix.AutoStop = true;
 
@@ -135,7 +312,6 @@ namespace SingWithGreatnessWeb
             int endPos = (int)reader.Length - endBytes;
 
             TrimWavFile(reader, writer, startPos, endPos);
-             
         }
 
         private static void TrimWavFile(WaveFileReader reader, WaveFileWriter writer, int startPos, int endPos)
@@ -167,134 +343,34 @@ namespace SingWithGreatnessWeb
 
         protected void playButton_Click(object sender, EventArgs e)
         {
-
-          
-            
             audio = new AudioFileReader(targetFile);
             player.Init(audio);
             player.Play();
-            
-            
         }
 
 
         protected void stopButton_Click(object sender, EventArgs e)
         {
-           
             player.Stop();
             player.Dispose();
         }
 
         protected void mixButton_Click(object sender, EventArgs e)
         {
-            //completeLabel.Visible = false;
+            completeLabel.Visible = false;
             
             Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
-            //dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { Convert.ToInt32(track1Start1.Text), Convert.ToInt32(track1End1.Text), Convert.ToInt32(track1Start2.Text), Convert.ToInt32(track1End2.Text) });
-            //dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\two", new int[] { Convert.ToInt32(track2Start1.Text), Convert.ToInt32(track2End1.Text), Convert.ToInt32(track2Start2.Text), Convert.ToInt32(track2End2.Text) });
+            dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { Convert.ToInt32(track1Start1.Text), Convert.ToInt32(track1End1.Text), Convert.ToInt32(track1Start2.Text), Convert.ToInt32(track1End2.Text) });
+            dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\two", new int[] { Convert.ToInt32(track2Start1.Text), Convert.ToInt32(track2End1.Text), Convert.ToInt32(track2Start2.Text), Convert.ToInt32(track2End2.Text) });
             Mixer mix = new Mixer();
             mix.MixAudio(dict);
 
-           
-
-            //completeLabel.Visible = true;
+            completeLabel.Visible = true;
         }
 
-        protected void addTrack1Button_Click(object sender, EventArgs e)
+        protected void logoutButton_Click(object sender, EventArgs e)
         {
-            AddSections(1);
-        }
-
-        protected void addTrack2Button_Click(object sender, EventArgs e)
-        {
-            AddSections(2);
-        }
-
-        protected void addTrackButton_Click(object sender, EventArgs e)
-        {
-
-            int trackNumber = trackCounts.Keys.Count + 1;
-            trackCounts.Add(trackNumber, 2);
-
-            Panel newTrackPanel = new Panel();
-            newTrackPanel.ID = "track" + trackNumber.ToString() + "Panel";
-
-            Label trackLabel = new Label();
-            trackLabel.ID = "track" + trackNumber.ToString() + "Label";
-            trackLabel.Text = "Track " + trackNumber.ToString();
-
-            Label startLabel1 = new Label();
-            startLabel1.Text = "Start: ";
-            TextBox startTextbox1 = new TextBox();
-            startTextbox1.ID = "track" + trackNumber.ToString() + "Start1Textbox";
-
-            Label endLabel1 = new Label();
-            endLabel1.Text = "End: ";
-            TextBox endTextbox1 = new TextBox();
-            endTextbox1.ID = "track" + trackNumber.ToString() + "End1Textbox";
-
-            Label startLabel2 = new Label();
-            startLabel2.Text = "Start: ";
-            TextBox startTextbox2 = new TextBox();
-            startTextbox2.ID = "track" + trackNumber.ToString() + "Start2Textbox";
-
-            Label endLabel2 = new Label();
-            endLabel2.Text = "End: ";
-            TextBox endTextbox2 = new TextBox();
-            endTextbox2.ID = "track" + trackNumber.ToString() + "End2Textbox";
-
-            Button addSectionsButton = new Button();
-            addSectionsButton.ID = "addTrack" + trackNumber.ToString() + "Button";
-            addSectionsButton.Text = "Add";
-            // set up button click later because its buggy and I don't know how
-
-
-            newTrackPanel.Controls.Add(new LiteralControl("<br/><br/>")); 
-            newTrackPanel.Controls.Add(trackLabel);
-            newTrackPanel.Controls.Add(new LiteralControl("<br/><br/>"));
-            newTrackPanel.Controls.Add(startLabel1);
-            newTrackPanel.Controls.Add(new LiteralControl("&nbsp;"));
-            newTrackPanel.Controls.Add(startTextbox1);
-            newTrackPanel.Controls.Add(new LiteralControl("&nbsp;&nbsp;&nbsp;"));
-            newTrackPanel.Controls.Add(endLabel1);
-            newTrackPanel.Controls.Add(endTextbox1);
-            newTrackPanel.Controls.Add(new LiteralControl("<br/><br/>"));
-            newTrackPanel.Controls.Add(startLabel2);
-            newTrackPanel.Controls.Add(new LiteralControl("&nbsp;"));
-            newTrackPanel.Controls.Add(startTextbox2);
-            newTrackPanel.Controls.Add(new LiteralControl("&nbsp;&nbsp;&nbsp;"));
-            newTrackPanel.Controls.Add(endLabel2);
-            newTrackPanel.Controls.Add(new LiteralControl("&nbsp;"));
-            newTrackPanel.Controls.Add(endTextbox2);
-
-            //trackPanel.Controls.Add(newTrackPanel);
-            //trackPanel.Controls.Add(addSectionsButton);
-        }
-
-        protected void AddSections(int trackNumber)
-        {
-            int sectionNumber = trackCounts[trackNumber] + 1;
-            trackCounts[trackNumber] = sectionNumber;
-            
-            Label startLabel = new Label();
-            startLabel.Text = "Start: ";
-            TextBox startTextbox = new TextBox();
-            startTextbox.ID = "track" + trackNumber.ToString() + "Start" + sectionNumber.ToString() + "Textbox";
-
-            Label endLabel = new Label();
-            endLabel.Text = "End: ";
-            TextBox endTextbox = new TextBox();
-            endTextbox.ID = "track" + trackNumber.ToString() + "End" + sectionNumber.ToString() + "Textbox";
-
-            //Panel panel = (Panel)trackPanel.FindControl("track" + trackNumber.ToString() + "Panel");
-            //panel.Controls.Add(new LiteralControl("<br/><br/>"));
-            //panel.Controls.Add(startLabel);
-            //panel.Controls.Add(new LiteralControl("&nbsp;"));
-            //panel.Controls.Add(startTextbox);
-            //panel.Controls.Add(new LiteralControl("&nbsp;&nbsp;&nbsp;"));
-            //panel.Controls.Add(endLabel);
-            //panel.Controls.Add(new LiteralControl("&nbsp;"));
-            //panel.Controls.Add(endTextbox);
+            Response.Redirect("~/Login.aspx");
         }
     }
 }

@@ -66,18 +66,6 @@
     <Content Include="BandHome.aspx" />
     <Content Include="Images\Sing With Greatness Logo.png" />
     <Content Include="Images\singwithgreatnessheader.png" />
-    <Content Include="Javascript\element.js" />
-    <Content Include="Javascript\elessar.js" />
-    <Content Include="Javascript\elessar.min.js" />
-    <Content Include="Javascript\eventprop.js" />
-    <Content Include="Javascript\evtx.js" />
-    <Content Include="Javascript\indicator.js" />
-    <Content Include="Javascript\mark.js" />
-    <Content Include="Javascript\phantom.js" />
-    <Content Include="Javascript\raf.js" />
-    <Content Include="Javascript\range.js" />
-    <Content Include="Javascript\rangebar.js" />
-    <Content Include="Javascript\vertical.js" />
     <Content Include="Login.aspx" />
     <Content Include="Mixer.aspx" />
     <Content Include="packages.config" />
@@ -89,7 +77,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Style\elessar.css" />
     <Content Include="Style\Style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -110,7 +97,6 @@
       <DependentUpon>BandHome.aspx</DependentUpon>
     </Compile>
     <Compile Include="FftEventArgs.cs" />
-    <Content Include="Jquery\jquery.collapse.js" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

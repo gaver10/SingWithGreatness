@@ -13,5 +13,24 @@ namespace SingWithGreatnessWeb
         {
 
         }
+
+        protected void loginButton_Click(object sender, EventArgs e)
+        {
+            wrongLoginLabel.Visible = false;
+
+            if (loginUsernameTextbox.Text == "Steve" && loginPasswordTextbox.Text == "bees")
+            {
+                Response.Redirect("~/Mixer.aspx");
+            }
+            else
+            {
+                wrongLoginLabel.Visible = true;
+            }
+        }
+
+        protected void RegisterButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Mixer.aspx");
+        }
     }
 }
