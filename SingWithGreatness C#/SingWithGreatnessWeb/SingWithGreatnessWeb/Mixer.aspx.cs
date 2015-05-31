@@ -50,6 +50,8 @@ namespace SingWithGreatnessWeb
 
         private void SetupDB()
         {
+            // need to get tracks only for this user's username.
+
             try
             {
                 using (OdbcConnection connection = new OdbcConnection(ConfigurationManager.ConnectionStrings["MySQLConnStr"].ConnectionString))
@@ -75,18 +77,11 @@ namespace SingWithGreatnessWeb
         {
             ddl.Items.Clear();
 
-
-           
-
             foreach (string key in dbTracks.Keys)
             {
                 ddl.Items.Add(key);
             }
-
-            
         }
-
-  
 
         private void SetInitialRow(GridView grid, string trackNumber)
         {
@@ -289,14 +284,11 @@ namespace SingWithGreatnessWeb
                 {
                     double silence = times[i] * 1000;
                     InsertSilence(writer, silence);
-
                 }
                 TrimWavFile(reader, writer, new TimeSpan(0,0,times[i]), new TimeSpan(0,0,audlen-times[i+1]));
                 if (i + 2 < times.Length)
                 {
                     double silence = (times[i+2] - times[i+1])*1000;
-                    
-
                     InsertSilence(writer, silence);
                 }
             }
@@ -307,7 +299,6 @@ namespace SingWithGreatnessWeb
 
         private void InsertSilence(WaveFileWriter writer, Double milliseconds)
         {
-
             Double avgBytesPerMillisecond = (Double)writer.WaveFormat.AverageBytesPerSecond / 1000F;
 
             Int32 silenceSize = (Int32)(milliseconds * avgBytesPerMillisecond);
@@ -319,20 +310,17 @@ namespace SingWithGreatnessWeb
             writer.Write(silenceArray, 0, silenceArray.Length);
         }
 
-
         public WaveMixerStream32 Combine()
         {
             WaveMixerStream32 wavMix = new WaveMixerStream32();
             wavMix.AutoStop = true;
 
-            
             foreach (WaveFileReader reader in toMix )
             {
                 WaveChannel32 wc3 = new WaveChannel32(reader);
                 wavMix.AddInputStream(wc3);
-                
-                
             }
+
             wavMix.Position = 0;
             return wavMix;
         }
@@ -409,12 +397,10 @@ namespace SingWithGreatnessWeb
             ParseInputs("4", track4Checkbox, track4Gridview, dict, track4DropdownList);
             ParseInputs("5", track5Checkbox, track5Gridview, dict, track5DropdownList);
           
-               
             //mix the whole thing - save into temp file
             Mixer mix = new Mixer();
             mix.MixAudio(dict);
             
-
            /* 
             Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
             dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { Convert.ToInt32(track1Start1.Text), Convert.ToInt32(track1End1.Text), Convert.ToInt32(track1Start2.Text), Convert.ToInt32(track1End2.Text) });

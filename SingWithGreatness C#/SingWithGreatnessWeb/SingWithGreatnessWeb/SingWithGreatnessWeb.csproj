@@ -62,7 +62,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AudienceHome.aspx" />
     <Content Include="BandHome.aspx" />
     <Content Include="Images\Sing With Greatness Logo.png" />
     <Content Include="Images\singwithgreatnessheader.png" />
@@ -82,13 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregator.cs" />
-    <Compile Include="AudienceHome.aspx.cs">
-      <DependentUpon>AudienceHome.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AudienceHome.aspx.designer.cs">
-      <DependentUpon>AudienceHome.aspx</DependentUpon>
-    </Compile>
     <Compile Include="BandHome.aspx.cs">
       <DependentUpon>BandHome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

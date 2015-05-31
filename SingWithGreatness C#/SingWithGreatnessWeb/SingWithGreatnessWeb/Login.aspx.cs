@@ -16,7 +16,7 @@ namespace SingWithGreatnessWeb
 
         protected void loginButton_Click(object sender, EventArgs e)
         {
-            wrongLoginLabel.Visible = false;
+            // check against db
 
             if (loginUsernameTextbox.Text == "Steve" && loginPasswordTextbox.Text == "bees")
             {
@@ -24,13 +24,33 @@ namespace SingWithGreatnessWeb
             }
             else
             {
-                wrongLoginLabel.Visible = true;
+                ClientScript.RegisterStartupScript(this.GetType(), "loginError", "alert('Incorrect login details.');", true);
             }
         }
 
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Mixer.aspx");
+            if (string.IsNullOrEmpty(registerUsernameTextbox.Text) ||
+                string.IsNullOrEmpty(registerPasswordTextbox.Text) ||
+                string.IsNullOrEmpty(registerEmailTextbox.Text) ||
+                accountTypeRadioButtonList.SelectedIndex < 0)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "registerError", "alert('All fields must be filled in order to register.');", true);
+            }
+            else
+            {
+                // check if username or email already exists
+                // else sign them up
+
+                if (accountTypeRadioButtonList.SelectedIndex == 0)
+                {
+                    Response.Redirect("~/BandHome.aspx");
+                }
+                else
+                {
+                    Response.Redirect("~/Mixer.aspx");
+                }
+            }
         }
     }
 }

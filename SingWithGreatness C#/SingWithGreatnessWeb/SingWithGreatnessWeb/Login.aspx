@@ -39,8 +39,6 @@
                         </table>
                         <br />
                         <br />
-                        <asp:Label runat="server" id="wrongLoginLabel" ForeColor="Red" Text="Incorrect login." Visible="false"/>
-                        <br />
                         <center>
                             <asp:Button CssClass="btn" runat="server" ID="loginButton" Text="Login" OnClick="loginButton_Click" />
                         </center>

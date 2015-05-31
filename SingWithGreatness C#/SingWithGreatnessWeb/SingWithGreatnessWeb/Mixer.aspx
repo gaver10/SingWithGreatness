@@ -4,16 +4,11 @@
     <head>
         <link href="Style/Style.css" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-        <script src="Jquery/jquery.collapse.js"></script>
         <script src="http://momentjs.com/downloads/moment.min.js"></script>
         <script src="http://code.jquery.com/jquery.min.js"></script>
         <script src="https://rawgithub.com/quarterto/Estira/master/index.js"></script>
     </head>
     <body>
-        <pre class="changing"></pre>
-        <script>
-            
-        </script>
         <h1>
             <center>
                 <img src="Images/singwithgreatnessheader.png" />
@@ -64,7 +59,7 @@
                                         </ItemTemplate>
                                         <FooterStyle HorizontalAlign="Right" />
                                         <FooterTemplate>
-                                         <asp:Button ID="track1AddButton" runat="server" Text="Add New Row" OnClick="track1AddButton_Click" />
+                                            <asp:Button ID="track1AddButton" runat="server" Text="Add New Row" OnClick="track1AddButton_Click" />
                                         </FooterTemplate>
                                     </asp:TemplateField>
                                 </Columns>
