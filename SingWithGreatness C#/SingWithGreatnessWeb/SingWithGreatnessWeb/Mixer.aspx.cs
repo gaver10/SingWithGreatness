@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.Odbc;
+using System.Configuration;
 
 namespace SingWithGreatnessWeb
 {
@@ -13,40 +15,78 @@ namespace SingWithGreatnessWeb
     {
         private List<WaveFileReader> toMix;
         private String targetFile = "C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\output";
+        private String lastFile = "";
         private AudioFileReader audio;
         private static WaveOut player = new WaveOut(WaveCallbackInfo.FunctionCallback());
 
         // key = track #, value = # of sections
         private Dictionary<int, int> trackCounts = new Dictionary<int, int>();
 
+        private static Dictionary<string, int> dbTracks = new Dictionary<string, int>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            if (!Page.IsPostBack && dbTracks.Count == 0)
             {
+
+                SetupDB();
                 SetInitialRow(track1Gridview, "1");
                 SetInitialRow(track2Gridview, "2");
                 SetInitialRow(track3Gridview, "3");
                 SetInitialRow(track4Gridview, "4");
                 SetInitialRow(track5Gridview, "5");
 
-                SetupDropDownList(track1DropdownList);
+                SetupDropDownList(track1DropDownList);
                 SetupDropDownList(track2DropdownList);
                 SetupDropDownList(track3DropdownList);
                 SetupDropDownList(track4DropdownList);
                 SetupDropDownList(track5DropdownList);
+                
             }
 
             trackCounts.Add(1, 2);
             trackCounts.Add(2, 2);
         }
 
+        private void SetupDB()
+        {
+            try
+            {
+                using (OdbcConnection connection = new OdbcConnection(ConfigurationManager.ConnectionStrings["MySQLConnStr"].ConnectionString))
+                {
+                    connection.Open();
+                    using (OdbcCommand command = new OdbcCommand("SELECT id, name FROM Tracks ORDER BY id", connection))
+                    using (OdbcDataReader dr = command.ExecuteReader())
+                    {
+                        while (dr.Read())
+                            dbTracks.Add(dr["name"].ToString(), Convert.ToInt32(dr["id"].ToString()));
+                        dr.Close();
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("An error occured: " + ex.Message);
+            }
+        }
+
         private void SetupDropDownList(DropDownList ddl)
         {
             ddl.Items.Clear();
-            ddl.Items.Add("one");
-            ddl.Items.Add("two");
+
+
+           
+
+            foreach (string key in dbTracks.Keys)
+            {
+                ddl.Items.Add(key);
+            }
+
+            
         }
+
+  
 
         private void SetInitialRow(GridView grid, string trackNumber)
         {
@@ -210,6 +250,7 @@ namespace SingWithGreatnessWeb
 
         public void MixAudio(Dictionary<String,int[]> songsXtimes)
         {
+            lastFile = targetFile += "_" + DateTime.Now.ToString();
             toMix = new List<WaveFileReader>();
             WaveMixerStream32 combined = null;
             foreach (String s in songsXtimes.Keys){
@@ -343,7 +384,7 @@ namespace SingWithGreatnessWeb
 
         protected void playButton_Click(object sender, EventArgs e)
         {
-            audio = new AudioFileReader(targetFile);
+            audio = new AudioFileReader(lastFile);
             player.Init(audio);
             player.Play();
         }
@@ -358,14 +399,77 @@ namespace SingWithGreatnessWeb
         protected void mixButton_Click(object sender, EventArgs e)
         {
             completeLabel.Visible = false;
+
+            //create a dictionary to submit to mix
+            Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
+            //for each table
+            ParseInputs("1", track1Checkbox, track1Gridview, dict, track1DropDownList);
+            ParseInputs("2", track2Checkbox, track2Gridview, dict, track2DropdownList);
+            ParseInputs("3", track3Checkbox, track3Gridview, dict, track3DropdownList);
+            ParseInputs("4", track4Checkbox, track4Gridview, dict, track4DropdownList);
+            ParseInputs("5", track5Checkbox, track5Gridview, dict, track5DropdownList);
+          
+               
+            //mix the whole thing - save into temp file
+            Mixer mix = new Mixer();
+            mix.MixAudio(dict);
             
+
+           /* 
             Dictionary<String, int[]> dict = new Dictionary<String, int[]>();
             dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\one", new int[] { Convert.ToInt32(track1Start1.Text), Convert.ToInt32(track1End1.Text), Convert.ToInt32(track1Start2.Text), Convert.ToInt32(track1End2.Text) });
             dict.Add("C:\\Users\\Gavin\\Documents\\GitHub\\SingWithGreatness\\SingWithGreatness C#\\SingWithGreatnessWeb\\SingWithGreatnessWeb\\two", new int[] { Convert.ToInt32(track2Start1.Text), Convert.ToInt32(track2End1.Text), Convert.ToInt32(track2Start2.Text), Convert.ToInt32(track2End2.Text) });
-            Mixer mix = new Mixer();
-            mix.MixAudio(dict);
+           
+            * */
 
             completeLabel.Visible = true;
+        }
+
+        protected void ParseInputs(string trackNumber, CheckBox checkbox, GridView gv, Dictionary<String,int[]> dict, DropDownList ddl)
+        {
+            string startTrack = "track" + trackNumber + "StartTextbox";
+            string stopTrack = "track" + trackNumber +  "StopTextbox";
+            string path ="";
+            int[] times;
+            int rows = gv.Rows.Count;
+
+            if (checkbox.Checked)
+            {
+                try
+                {
+                    using (OdbcConnection connection = new OdbcConnection(ConfigurationManager.ConnectionStrings["MySQLConnStr"].ConnectionString))
+                    {
+                        string cmd = "SELECT path FROM tracks WHERE id = '" + dbTracks[ddl.SelectedValue].ToString() + "'";
+
+                        connection.Open();
+                        using (OdbcCommand command = new OdbcCommand(cmd, connection))
+                        using (OdbcDataReader dr = command.ExecuteReader())
+                        {
+                            while (dr.Read())
+                                path = dr["path"].ToString();
+                            dr.Close();
+                        }
+                        connection.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("An error occured: " + ex.Message);
+                }
+
+                times = new int[rows*2];
+                int count = 0;
+                foreach (GridViewRow row in gv.Rows)
+                {
+                    int start = Convert.ToInt32(((TextBox)row.FindControl(startTrack)).Text);
+                    times[count] = start;
+                    count++;
+                    int stop = Convert.ToInt32(((TextBox)row.FindControl(stopTrack)).Text);
+                    times[count] = stop;
+                    count++;
+                }
+                dict.Add(path, times);
+            }
         }
 
         protected void logoutButton_Click(object sender, EventArgs e)
