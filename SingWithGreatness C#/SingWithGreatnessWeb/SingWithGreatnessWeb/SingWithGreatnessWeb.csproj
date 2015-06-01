@@ -88,7 +88,9 @@
     <Compile Include="BandHome.aspx.designer.cs">
       <DependentUpon>BandHome.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DbHelper.cs" />
     <Compile Include="FftEventArgs.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

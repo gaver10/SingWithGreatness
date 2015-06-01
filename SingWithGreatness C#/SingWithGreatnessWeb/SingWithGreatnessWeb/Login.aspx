@@ -80,8 +80,8 @@
                                 </td>
                                 <td>
                                     <asp:RadioButtonList runat="server" ID="accountTypeRadioButtonList">
-                                        <asp:ListItem Text="Band" />
                                         <asp:ListItem Text="Audience" />
+                                        <asp:ListItem Text="Band" />
                                     </asp:RadioButtonList>
                                 </td>
                             </tr>

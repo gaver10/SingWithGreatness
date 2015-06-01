@@ -50,26 +50,11 @@ namespace SingWithGreatnessWeb
 
         private void SetupDB()
         {
-            // need to get tracks only for this user's username.
-
-            try
+            DataTable dt = DbHelper.GetDBData("SELECT id, name FROM Tracks WHERE user = '" + Globals.currentUser + "' ORDER BY id");
+           
+            foreach (DataRow dr in dt.Rows)
             {
-                using (OdbcConnection connection = new OdbcConnection(ConfigurationManager.ConnectionStrings["MySQLConnStr"].ConnectionString))
-                {
-                    connection.Open();
-                    using (OdbcCommand command = new OdbcCommand("SELECT id, name FROM Tracks ORDER BY id", connection))
-                    using (OdbcDataReader dr = command.ExecuteReader())
-                    {
-                        while (dr.Read())
-                            dbTracks.Add(dr["name"].ToString(), Convert.ToInt32(dr["id"].ToString()));
-                        dr.Close();
-                    }
-                    connection.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Response.Write("An error occured: " + ex.Message);
+                dbTracks.Add(dr["name"].ToString(), Convert.ToInt32(dr["id"].ToString()));
             }
         }
 
@@ -421,26 +406,11 @@ namespace SingWithGreatnessWeb
 
             if (checkbox.Checked)
             {
-                try
-                {
-                    using (OdbcConnection connection = new OdbcConnection(ConfigurationManager.ConnectionStrings["MySQLConnStr"].ConnectionString))
-                    {
-                        string cmd = "SELECT path FROM tracks WHERE id = '" + dbTracks[ddl.SelectedValue].ToString() + "'";
+                DataTable dt = DbHelper.GetDBData("SELECT path FROM tracks WHERE user = '" + Globals.currentUser + "' AND id = '" + dbTracks[ddl.SelectedValue].ToString() + "'");
 
-                        connection.Open();
-                        using (OdbcCommand command = new OdbcCommand(cmd, connection))
-                        using (OdbcDataReader dr = command.ExecuteReader())
-                        {
-                            while (dr.Read())
-                                path = dr["path"].ToString();
-                            dr.Close();
-                        }
-                        connection.Close();
-                    }
-                }
-                catch (Exception ex)
+                if (dt.Rows.Count > 0)
                 {
-                    Response.Write("An error occured: " + ex.Message);
+                    path = dt.Rows[0]["path"].ToString();
                 }
 
                 times = new int[rows*2];
@@ -460,6 +430,7 @@ namespace SingWithGreatnessWeb
 
         protected void logoutButton_Click(object sender, EventArgs e)
         {
+            Globals.currentUser = "";
             Response.Redirect("~/Login.aspx");
         }
     }
